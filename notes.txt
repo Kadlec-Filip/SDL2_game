@@ -1,0 +1,5 @@
+copied & renamed from /lib/x86_64-linux-gnu/ to SDL2_project/bin/release & debug 2 shared objects from the system (installed SDL library):
+
+cp libSDL2_image-2.0.so.0.2.3 ~/git_dir/SDL2_project/bin/debug/
+cp libSDL2-2.0.so.0.10.0 ~/git_dir/SDL2_project/bin/debug/
+

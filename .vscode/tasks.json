@@ -1,0 +1,67 @@
+{
+    "tasks": [
+        {
+            // Debug build config
+            "type": "cppbuild",
+            "label": "C/C++: g++ DEBUG",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "${workspaceFolder}/src/*.cpp",
+                "-std=c++14",
+                "-Wall",
+                "-I",
+                "${workspaceFolder}/include",
+                "-o",
+                "${workspaceFolder}/bin/debug/out",
+                "-lSDL2main", // not necessary?
+                "-lSDL2",
+                "-lSDL2_image"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "g++ DEBUG build config"
+            },
+
+            // Release build config
+            {
+                "type": "cppbuild",
+                "label": "C/C++: g++ RELEASE",
+                "command": "/usr/bin/g++",
+                "args": [
+                    "-O3",  // optimised
+                    "${workspaceFolder}/src/*.cpp",
+                    "-std=c++14",
+                    "-Wall",
+                    "-I",
+                    "${workspaceFolder}/include",
+                    "-o",
+                    "${workspaceFolder}/bin/release/out",
+                    "-s", // strips all debug symbols
+                    "-lSDL2main", // not necessary?
+                    "-lSDL2",
+                    "-lSDL2_image"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder}"
+                },
+                "problemMatcher": [
+                    "$gcc"
+                ],
+                "group": {
+                    "kind": "build",
+                    "isDefault": true
+                },
+                "detail": "g++ RELEASE build config"
+                }
+    ],
+    "version": "2.0.0"
+}
