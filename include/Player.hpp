@@ -2,19 +2,22 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <vector>
-
+#include <map>
+#include "Utils.hpp"
 #include "DrawableEntity.hpp"
-
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 480;
 
 class Player : public DrawableEntity {
 public:	
-	Player(Vector2f pos, std::vector<SDL_Texture*> texs_vec);
-	bool jump();
-	int isDead();
+	Player(Vector2f pos, SDL_Texture* texture);
+	utils::State getState();
+	void setState(utils::State s);
+	int isAlive();
+	void setDead();
+	int getSizeOfStateSprites();
+	void setCurrentFrame(int idx);
 private:
 	bool grounded;
-	int dead = 0;
-	std::vector<SDL_Texture*> texs_vec;
+	bool alive = 0;
+	utils::State state = utils::State::RUN_R;
+	std::map<utils::State, std::vector<SDL_Rect>> state_sprites;
 };

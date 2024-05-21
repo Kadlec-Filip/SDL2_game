@@ -8,4 +8,8 @@ namespace utils{
         t *= 0.001f;
         return t;
     }
+
+    enum class State {RUN_L, RUN_R, STAY, JUMP};
+    const int GAME_WINDOW_HEIGHT = 720;
+    const int GAME_WINDOW_WIDTH = 1280;
 }
