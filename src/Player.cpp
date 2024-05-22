@@ -12,6 +12,7 @@ Player::Player(Vector2f pos, SDL_Texture* texture) : DrawableEntity{pos, texture
     state_sprites.insert({utils::State::RUN_R, sdlRenderUtils::playerRunRSpritesheet});
     state_sprites.insert({utils::State::RUN_L, sdlRenderUtils::playerRunLSpritesheet});
     state_sprites.insert({utils::State::IDLE, sdlRenderUtils::playerIdleSpritesheet});
+    state_sprites.insert({utils::State::ATTACK, sdlRenderUtils::playerAttackRSpritesheet});
 }
 
 utils::State Player::getState(){ return state; }
@@ -37,6 +38,9 @@ void Player::setTexture(utils::State s, RenderWindow& w){
         break;
     case utils::State::IDLE:
         texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+        break;
+    case utils::State::ATTACK:
+        texture = w.LoadTexture(sdlRenderUtils::playerTextureAttackRPath);
         break;
     default:
         texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);

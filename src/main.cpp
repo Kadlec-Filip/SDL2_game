@@ -8,8 +8,11 @@
 #include "Player.hpp"
 #include "Math.hpp"
 #include "Utils.hpp"
+#include "EventManager.hpp"
+
 // TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
+//      Handle blocking animations (when running, run only when key is pressed = OK; when attacking, 1 key press = animation of 4 frames exactly)
 
 int main(int argc, char* argv[]){
 
@@ -32,6 +35,7 @@ int main(int argc, char* argv[]){
                                                 DrawableEntity(Vector2f((32*4)*5, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture)};
 
     SDL_Event event;
+    EventManager eventManager(player);
     bool game_running = true;
     const float time_step = 0.01f;  // how much you advance the simulation/game forward with each frame
     float accumulator = 0.0f; // when accumulator == time_step --> update 
@@ -58,25 +62,9 @@ int main(int argc, char* argv[]){
             while (SDL_PollEvent(&event)){
                 if (event.type == SDL_QUIT)
                     game_running = false;
-                // TODO: put in some EventManager or smth
-                else if (event.type == SDL_KEYDOWN){
-                    switch (event.key.keysym.sym){
-                        case SDLK_a:
-                        player.updatePlayer(utils::State::RUN_L, window);
-                        break;
-                        case SDLK_d:
-                        player.updatePlayer(utils::State::RUN_R, window);
-                        break;
-                        case SDLK_w:
-                        player.updatePlayer(utils::State::IDLE, window);
-                        break;
-                        case SDLK_s:
-                        player.updatePlayer(utils::State::IDLE, window);
-                        break;
-                    }
+                else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP){
+                    eventManager.keyProcess(window);
                 }
-                
-                //////////////////////////////////////////////
             }
             accumulator -= time_step;
         }
