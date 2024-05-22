@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
     RenderWindow window("GAME v0.1", utils::GAME_WINDOW_WIDTH, utils::GAME_WINDOW_HEIGHT);
 
     SDL_Texture* grassTexture = window.LoadTexture("../res/gfx/ground_grass_1.png");
-    SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_IDLE.png");
+    SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_Idle.png");
 
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
     std::vector<DrawableEntity> dentities_vec = {DrawableEntity(Vector2f((32*4)*0, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
