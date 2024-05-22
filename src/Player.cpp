@@ -30,13 +30,17 @@ void Player::setCurrentFrame(int idx){
 void Player::setTexture(utils::State s, RenderWindow& w){
     switch (s) {
     case utils::State::RUN_R:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+        texture = w.LoadTexture(sdlRenderUtils::playerTextureRunRPath);
         break;
     case utils::State::RUN_L:
         texture = w.LoadTexture(sdlRenderUtils::playerTextureRunLPath);
         break;
+    case utils::State::IDLE:
+        texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+        break;
     default:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureRunRPath);
+        texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+        break;
     }
 }
 

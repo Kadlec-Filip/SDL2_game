@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
     RenderWindow window("GAME v0.1", utils::GAME_WINDOW_WIDTH, utils::GAME_WINDOW_HEIGHT);
 
     SDL_Texture* grassTexture = window.LoadTexture("../res/gfx/ground_grass_1.png");
-    SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_Run_R.png");
+    SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_IDLE.png");
 
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
     std::vector<DrawableEntity> dentities_vec = {DrawableEntity(Vector2f((32*4)*0, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
@@ -38,7 +38,6 @@ int main(int argc, char* argv[]){
     float current_time = utils::hireTimeInSeconds();
     int spriteCounter = 0;
     int spriteIdx = 0;
-    int tempCounter = 0;
 
     while (game_running){
         int start_ticks = SDL_GetTicks();
@@ -59,6 +58,25 @@ int main(int argc, char* argv[]){
             while (SDL_PollEvent(&event)){
                 if (event.type == SDL_QUIT)
                     game_running = false;
+                // TODO: put in some EventManager or smth
+                else if (event.type == SDL_KEYDOWN){
+                    switch (event.key.keysym.sym){
+                        case SDLK_a:
+                        player.updatePlayer(utils::State::RUN_L, window);
+                        break;
+                        case SDLK_d:
+                        player.updatePlayer(utils::State::RUN_R, window);
+                        break;
+                        case SDLK_w:
+                        player.updatePlayer(utils::State::IDLE, window);
+                        break;
+                        case SDLK_s:
+                        player.updatePlayer(utils::State::IDLE, window);
+                        break;
+                    }
+                }
+                
+                //////////////////////////////////////////////
             }
             accumulator -= time_step;
         }
@@ -79,19 +97,6 @@ int main(int argc, char* argv[]){
             SDL_Delay(1000 / window.getRefreshRate() - frame_ticks);
 
         spriteCounter++;
-
-        // To be removed once user input (key press) is implemented
-        tempCounter++;
-        if (tempCounter%540==0){
-            player.updatePlayer(utils::State::IDLE, window);
-        }
-        else if (tempCounter%360==0){
-            player.updatePlayer(utils::State::RUN_R, window);
-        }
-        else if (tempCounter%180==0){
-            player.updatePlayer(utils::State::RUN_L, window);
-        }
-        //////////////////////////////////////////////////////////////
     }
 
     SDL_Quit();
