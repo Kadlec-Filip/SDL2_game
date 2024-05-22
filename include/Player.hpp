@@ -5,6 +5,7 @@
 #include <map>
 #include "Utils.hpp"
 #include "DrawableEntity.hpp"
+#include "RenderWindow.hpp"
 
 class Player : public DrawableEntity {
 public:	
@@ -15,6 +16,8 @@ public:
 	void setDead();
 	int getSizeOfStateSprites();
 	void setCurrentFrame(int idx);
+	void setTexture(utils::State s, RenderWindow& w);
+	void updatePlayer(utils::State s, RenderWindow& w);
 private:
 	bool grounded;
 	bool alive = 0;

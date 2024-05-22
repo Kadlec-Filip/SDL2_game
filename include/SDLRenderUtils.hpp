@@ -15,7 +15,11 @@ namespace sdlRenderUtils{
     SDL_Rect spriteFrame7 {760, 40, 40, 40};
     SDL_Rect spriteFrame8 {880, 40, 40, 40};
     SDL_Rect spriteFrame9 {1000, 40, 40, 40};
-    utils::State playerRunState = utils::State::RUN_R;
-    std::vector<SDL_Rect> playerRunSpritesheet {spriteFrame1, spriteFrame2, spriteFrame3, spriteFrame4, spriteFrame5, spriteFrame6, spriteFrame7, spriteFrame8, spriteFrame9};
-    std::vector<SDL_Rect> spriteFrameVec = sdlRenderUtils::playerRunSpritesheet;
+    SDL_Rect spriteFrame10 {1120, 40, 40, 40};
+    std::vector<SDL_Rect> playerRunLSpritesheet {spriteFrame9, spriteFrame8, spriteFrame7, spriteFrame6, spriteFrame5, spriteFrame4, spriteFrame3, spriteFrame2, spriteFrame1};
+    std::vector<SDL_Rect> playerRunRSpritesheet {spriteFrame1, spriteFrame2, spriteFrame3, spriteFrame4, spriteFrame5, spriteFrame6, spriteFrame7, spriteFrame8, spriteFrame9};
+    std::vector<SDL_Rect> playerIdleSpritesheet {spriteFrame1, spriteFrame2, spriteFrame3, spriteFrame4, spriteFrame5, spriteFrame6, spriteFrame7, spriteFrame8, spriteFrame9, spriteFrame10};
+    const char* playerTextureRunLPath = "../res/gfx/_Run_L.png";  // const char * mandatory for render window
+    const char* playerTextureRunRPath = "../res/gfx/_Run_R.png";
+    const char* playerTextureIdlePath = "../res/gfx/_Idle.png";
 }

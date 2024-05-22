@@ -8,7 +8,8 @@
 #include "Player.hpp"
 #include "Math.hpp"
 #include "Utils.hpp"
-// TODO: use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
+// TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
+//      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 
 int main(int argc, char* argv[]){
 
@@ -20,7 +21,7 @@ int main(int argc, char* argv[]){
     RenderWindow window("GAME v0.1", utils::GAME_WINDOW_WIDTH, utils::GAME_WINDOW_HEIGHT);
 
     SDL_Texture* grassTexture = window.LoadTexture("../res/gfx/ground_grass_1.png");
-    SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_Run.png");
+    SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_Run_R.png");
 
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
     std::vector<DrawableEntity> dentities_vec = {DrawableEntity(Vector2f((32*4)*0, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
@@ -37,6 +38,7 @@ int main(int argc, char* argv[]){
     float current_time = utils::hireTimeInSeconds();
     int spriteCounter = 0;
     int spriteIdx = 0;
+    int tempCounter = 0;
 
     while (game_running){
         int start_ticks = SDL_GetTicks();
@@ -77,6 +79,19 @@ int main(int argc, char* argv[]){
             SDL_Delay(1000 / window.getRefreshRate() - frame_ticks);
 
         spriteCounter++;
+
+        // To be removed once user input (key press) is implemented
+        tempCounter++;
+        if (tempCounter%540==0){
+            player.updatePlayer(utils::State::IDLE, window);
+        }
+        else if (tempCounter%360==0){
+            player.updatePlayer(utils::State::RUN_R, window);
+        }
+        else if (tempCounter%180==0){
+            player.updatePlayer(utils::State::RUN_L, window);
+        }
+        //////////////////////////////////////////////////////////////
     }
 
     SDL_Quit();
