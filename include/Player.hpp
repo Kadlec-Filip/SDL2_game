@@ -16,19 +16,24 @@ public:
 	void setDead();
 	int getSizeOfStateSprites();
 	void setCurrentFrame(int idx);
-	void setTexture(utils::State s, RenderWindow& w);
+	void setTexture(RenderWindow& w);
 	void updatePlayer(utils::State s, RenderWindow& w);
 	bool isPlayerRenderBlocked();
     void setPlayerRenderBlocked();
 	void unsetPlayerRenderBlocked();
 	int getBlockingTextureLen();
 	void setBlockingTextureLen(int p_btl);
+	void move();
+	void setVelocity(Velocity2f p_velocity);
+	void setVelocityByState();
+	Velocity2f& getVelocity();
 
 private:
 	bool grounded;
 	bool alive = false;
 	bool playerRenderBlocked=false;
 	int blockingTextureLen;
+	Velocity2f velocity {0,0};
 	utils::State state = utils::State::RUN_R;
 	std::map<utils::State, std::vector<SDL_Rect>> state_sprites;
 };

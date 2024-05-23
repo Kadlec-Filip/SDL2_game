@@ -13,4 +13,6 @@ namespace utils{
     const int GAME_WINDOW_HEIGHT = 720;
     const int GAME_WINDOW_WIDTH = 1280;
     const int RENDER_SPEED = 10;
+    const float PLAYER_RUN_R_VELOCITY = 5;
+    const float PLAYER_RUN_L_VELOCITY = -5;
 }

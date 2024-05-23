@@ -9,13 +9,8 @@ struct Vector2f{
     void print();
     float x, y;
     
-    Vector2f operator+(const Vector2f& other_v) const {
-        return Vector2f(x + other_v.x, y + other_v.y);
-    }
-
-    Vector2f operator-(const Vector2f& other_v) const {
-        return Vector2f(x - other_v.x, y - other_v.y);
-    }
+    Vector2f operator+(const Vector2f& other_v) const;
+    Vector2f operator-(const Vector2f& other_v) const;
 };
 
 struct Velocity2f {

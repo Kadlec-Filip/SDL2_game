@@ -16,5 +16,6 @@ std::vector<SDL_Texture*> tex;
 
 
 Vector2f& DrawableEntity::getPos(){ return pos; }
+void DrawableEntity::setPos(Vector2f p_pos){ pos = p_pos; }
 SDL_Texture* DrawableEntity::getTexture() {return texture; }
 SDL_Rect DrawableEntity::getCurrentFrame() {return currentFrame; } 

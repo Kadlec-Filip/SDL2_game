@@ -8,6 +8,7 @@ class DrawableEntity{
 public:
     DrawableEntity(Vector2f pos, SDL_Texture* texture);
     Vector2f& getPos();
+    void setPos(Vector2f p_pos);
     SDL_Texture* getTexture();
     SDL_Rect getCurrentFrame();
 protected:

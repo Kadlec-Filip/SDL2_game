@@ -78,6 +78,8 @@ int main(int argc, char* argv[]){
 
         eventManager.keyboardProcess(window);
 
+        // Update positions of objects
+        player.move();
         // const float alpha = accumulator/time_step;
 
         // Display all drawable entities

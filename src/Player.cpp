@@ -36,8 +36,8 @@ void Player::unsetPlayerRenderBlocked() {playerRenderBlocked=false; }
 int Player::getBlockingTextureLen() { return blockingTextureLen; }
 void Player::setBlockingTextureLen(int p_btl) {blockingTextureLen = p_btl; }
 
-void Player::setTexture(utils::State s, RenderWindow& w){
-    switch (s) {
+void Player::setTexture(RenderWindow& w){
+    switch (state) {
     case utils::State::RUN_R:
         texture = w.LoadTexture(sdlRenderUtils::playerTextureRunRPath);
         break;
@@ -56,7 +56,37 @@ void Player::setTexture(utils::State s, RenderWindow& w){
     }
 }
 
+void Player::setVelocity(Velocity2f p_velocity){ velocity = p_velocity; }
+
+void Player::setVelocityByState(){
+    switch (state) {
+    case utils::State::RUN_R:
+        velocity.value.x = utils::PLAYER_RUN_R_VELOCITY;
+        break;
+    case utils::State::RUN_L:
+        velocity.value.x = utils::PLAYER_RUN_L_VELOCITY;
+        break;
+    case utils::State::IDLE:
+        velocity.value.x = 0;
+        break;
+    case utils::State::ATTACK:
+        velocity.value.x = 0;
+        break;
+    default:
+        velocity.value.x = 0;
+        break;
+    }
+}
+
+void Player::move(){
+    pos.x += velocity.value.x;
+    pos.y += velocity.value.y;
+}
+
 void Player::updatePlayer(utils::State s, RenderWindow& w){
     setState(s);
-    setTexture(s,w);
+    setTexture(w);
+    setVelocityByState();
 }
+
+Velocity2f& Player::getVelocity(){ return velocity; }
