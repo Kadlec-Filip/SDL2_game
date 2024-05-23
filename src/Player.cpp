@@ -69,12 +69,16 @@ void Player::setVelocityByState(){
     case utils::State::IDLE:
         velocity.value.x = 0;
         break;
-    case utils::State::ATTACK:
+    case utils::State::ATTACK: // TODO if prev state is runR -> speed from runR, if leftR..
         velocity.value.x = 0;
         break;
     default:
         velocity.value.x = 0;
         break;
+    }
+
+    if (!isGrounded()) {
+        velocity.value.y = utils::GRAVITY; // Apply gravity
     }
 }
 
@@ -86,7 +90,17 @@ void Player::move(){
 void Player::updatePlayer(utils::State s, RenderWindow& w){
     setState(s);
     setTexture(w);
-    setVelocityByState();
+    setVelocityByState(); // TODO rename (updateVelicities?)
 }
 
 Velocity2f& Player::getVelocity(){ return velocity; }
+void Player::setVelocityX(float x){
+    velocity.value.x = x;
+}
+void Player::setVelocityY(float y){
+    velocity.value.y = y;
+}
+
+bool Player::isGrounded(){ return grounded; }
+void Player::setGrounded() { grounded = true; }
+void Player::unsetGrounded() { grounded = false; }

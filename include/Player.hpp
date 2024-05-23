@@ -13,6 +13,9 @@ public:
 	utils::State getState();
 	void setState(utils::State s);
 	int isAlive();
+	bool isGrounded();
+    void setGrounded();
+	void unsetGrounded();
 	void setDead();
 	int getSizeOfStateSprites();
 	void setCurrentFrame(int idx);
@@ -25,6 +28,8 @@ public:
 	void setBlockingTextureLen(int p_btl);
 	void move();
 	void setVelocity(Velocity2f p_velocity);
+	void setVelocityX(float x);
+	void setVelocityY(float y);
 	void setVelocityByState();
 	Velocity2f& getVelocity();
 

@@ -15,4 +15,6 @@ namespace utils{
     const int RENDER_SPEED = 10;
     const float PLAYER_RUN_R_VELOCITY = 5;
     const float PLAYER_RUN_L_VELOCITY = -5;
+    const float JUMP_VELOCITY = 1;
+    const float GRAVITY = 1;  // speed for now :)
 }

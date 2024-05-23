@@ -28,13 +28,18 @@ int main(int argc, char* argv[]){
     SDL_Texture* grassTexture = window.LoadTexture("../res/gfx/ground_grass_1.png");
     SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_Idle.png");
 
-    Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
-    std::vector<DrawableEntity> dentities_vec = {DrawableEntity(Vector2f((32*4)*0, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
-                                                DrawableEntity(Vector2f((32*4)*1, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
-                                                DrawableEntity(Vector2f((32*4)*2, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
-                                                DrawableEntity(Vector2f((32*4)*3, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
-                                                DrawableEntity(Vector2f((32*4)*4, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture),
-                                                DrawableEntity(Vector2f((32*4)*5, utils::GAME_WINDOW_HEIGHT-(32*4)), grassTexture)};
+    // Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
+    Player player(Vector2f(utils::GAME_WINDOW_WIDTH/5-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
+    std::vector<DrawableEntity> dentities_vec = {DrawableEntity(Vector2f((32)*0, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*1, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*2, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*3, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*4, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*5, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*6, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*7, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*8, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
+                                                DrawableEntity(Vector2f((32)*9, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture)};
 
     SDL_Event event;
     EventManager eventManager(player);
@@ -84,6 +89,10 @@ int main(int argc, char* argv[]){
         // Update positions of objects
         player.move();
         // const float alpha = accumulator/time_step;
+
+        // Resolve collisions
+        // TODO
+        eventManager.resolveAllCollisions(player, dentities_vec);
 
         // Display all drawable entities
         window.clear();

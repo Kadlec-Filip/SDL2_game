@@ -40,8 +40,8 @@ void RenderWindow::render(DrawableEntity& dentity){
     SDL_Rect sdl_rectangle_dst;
     sdl_rectangle_dst.x = dentity.getPos().x;
     sdl_rectangle_dst.y = dentity.getPos().y;
-    sdl_rectangle_dst.w = dentity.getCurrentFrame().w * 4;
-    sdl_rectangle_dst.h = dentity.getCurrentFrame().h * 4;
+    sdl_rectangle_dst.w = dentity.getCurrentFrame().w;
+    sdl_rectangle_dst.h = dentity.getCurrentFrame().h;
     SDL_RenderCopy(renderer, dentity.getTexture(), &sdl_rectangle_source, &sdl_rectangle_dst);
 }
 

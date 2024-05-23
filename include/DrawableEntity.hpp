@@ -10,7 +10,8 @@ public:
     Vector2f& getPos();
     void setPos(Vector2f p_pos);
     SDL_Texture* getTexture();
-    SDL_Rect getCurrentFrame();
+    SDL_Rect getCurrentFrame(); // TODO return ref?
+    SDL_Rect getBoundingBox();
 protected:
     Vector2f pos;
     SDL_Rect currentFrame;
