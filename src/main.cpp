@@ -12,6 +12,9 @@
 
 // TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
+//      Separate logic in updating of player object ( render and movement updates shouldn't be tied)
+//      2) Ground player object
+//      1) Collision detection (first just basic wall, ground)
 
 int main(int argc, char* argv[]){
 
