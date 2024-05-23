@@ -12,7 +12,6 @@
 
 // TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
-//      Handle blocking animations (when running, run only when key is pressed = OK; when attacking, 1 key press = animation of 4 frames exactly)
 
 int main(int argc, char* argv[]){
 
@@ -51,10 +50,21 @@ int main(int argc, char* argv[]){
         accumulator += frame_time;
 
         // Every X cycles update current frame on each obj from their respective sprite sheets
-        if (spriteCounter%10==0){
+        if (spriteCounter%utils::RENDER_SPEED==0){
             spriteIdx++;
-            if (spriteIdx >= player.getSizeOfStateSprites())
+            // if at the end of sprite sheet, set to first frame of sprite sheet
+            if (spriteIdx >= player.getSizeOfStateSprites()){
                 spriteIdx = spriteCounter = 0;
+            }
+
+            // handle blocking animation (e.g. attack)  TODO: to function/object
+            if (player.isPlayerRenderBlocked()){
+                player.setBlockingTextureLen(player.getBlockingTextureLen() - 1);
+                if (player.getBlockingTextureLen() <= 0){
+                    player.unsetPlayerRenderBlocked();
+                    player.updatePlayer(utils::State::IDLE, window);
+                }
+            }
             player.setCurrentFrame(spriteIdx);
         }
 

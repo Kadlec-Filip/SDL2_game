@@ -28,6 +28,14 @@ void Player::setCurrentFrame(int idx){
     currentFrame = currentSpriteFrameVec.at(idx);
 }
 
+bool Player::isPlayerRenderBlocked(){ return playerRenderBlocked; }
+
+void Player::setPlayerRenderBlocked() { playerRenderBlocked=true; }
+void Player::unsetPlayerRenderBlocked() {playerRenderBlocked=false; }
+
+int Player::getBlockingTextureLen() { return blockingTextureLen; }
+void Player::setBlockingTextureLen(int p_btl) {blockingTextureLen = p_btl; }
+
 void Player::setTexture(utils::State s, RenderWindow& w){
     switch (s) {
     case utils::State::RUN_R:

@@ -12,4 +12,5 @@ namespace utils{
     enum class State {RUN_L, RUN_R, IDLE, JUMP, ATTACK};
     const int GAME_WINDOW_HEIGHT = 720;
     const int GAME_WINDOW_WIDTH = 1280;
+    const int RENDER_SPEED = 10;
 }

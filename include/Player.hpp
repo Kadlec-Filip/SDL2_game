@@ -18,9 +18,17 @@ public:
 	void setCurrentFrame(int idx);
 	void setTexture(utils::State s, RenderWindow& w);
 	void updatePlayer(utils::State s, RenderWindow& w);
+	bool isPlayerRenderBlocked();
+    void setPlayerRenderBlocked();
+	void unsetPlayerRenderBlocked();
+	int getBlockingTextureLen();
+	void setBlockingTextureLen(int p_btl);
+
 private:
 	bool grounded;
-	bool alive = 0;
+	bool alive = false;
+	bool playerRenderBlocked=false;
+	int blockingTextureLen;
 	utils::State state = utils::State::RUN_R;
 	std::map<utils::State, std::vector<SDL_Rect>> state_sprites;
 };
