@@ -8,7 +8,7 @@ class EventManager{
 public:
     EventManager(Player& p_player);
     const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
-    void keyProcess(RenderWindow& p_rw); 
+    void keyboardProcess(RenderWindow& p_rw); 
 protected:
     Player& player;
 };

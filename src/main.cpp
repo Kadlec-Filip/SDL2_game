@@ -72,12 +72,11 @@ int main(int argc, char* argv[]){
             while (SDL_PollEvent(&event)){
                 if (event.type == SDL_QUIT)
                     game_running = false;
-                else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP){
-                    eventManager.keyProcess(window);
-                }
             }
             accumulator -= time_step;
         }
+
+        eventManager.keyboardProcess(window);
 
         // const float alpha = accumulator/time_step;
 

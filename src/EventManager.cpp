@@ -9,9 +9,14 @@ EventManager::EventManager(Player& p_player) : player(p_player) {
     
 }
 
-void EventManager::keyProcess(RenderWindow& p_rw){
+void EventManager::keyboardProcess(RenderWindow& p_rw){
     if (!player.isPlayerRenderBlocked()){
-        if (keyboardState[SDL_SCANCODE_A]) {
+        if (keyboardState[SDL_SCANCODE_J]){
+            player.updatePlayer(utils::State::ATTACK, p_rw);
+            player.setPlayerRenderBlocked();
+            player.setBlockingTextureLen(player.getSizeOfStateSprites());
+        }
+        else if (keyboardState[SDL_SCANCODE_A]) {
             player.updatePlayer(utils::State::RUN_L, p_rw);
         }
         else if (keyboardState[SDL_SCANCODE_D]){
@@ -22,11 +27,6 @@ void EventManager::keyProcess(RenderWindow& p_rw){
         }
         else if (keyboardState[SDL_SCANCODE_W]){
             player.updatePlayer(utils::State::IDLE, p_rw);
-        }
-        else if (keyboardState[SDL_SCANCODE_J]){
-            player.updatePlayer(utils::State::ATTACK, p_rw);
-            player.setPlayerRenderBlocked();
-            player.setBlockingTextureLen(player.getSizeOfStateSprites());
         }
         else{
             player.updatePlayer(utils::State::IDLE, p_rw);
