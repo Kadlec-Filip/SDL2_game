@@ -61,30 +61,27 @@ int main(int argc, char* argv[]){
                 spriteIdx = spriteCounter = 0;
             }
 
-            // TODO do better, TODO WHY defined by ender speed? put jumping, attacking logic outside of current if statement
-            if (player.isFalling()){
-                player.updatePlayer(utils::State::FALL, window);
-            }
-            if (player.isJumping()){
-                player.currentJumpHeight -= 1;
-                if (player.currentJumpHeight <= 0){
-                    player.unsetJumping();
-                    player.setFalling();
-                    player.updatePlayer(utils::State::FALL, window);
-                }
-                else{
-                    player.updatePlayer(utils::State::JUMP, window);
-                }
-            }
             // handle blocking animation (e.g. attack)  TODO: to function/object
             else if (player.isPlayerRenderBlocked()){
                 player.setBlockingTextureLen(player.getBlockingTextureLen() - 1);
                 if (player.getBlockingTextureLen() <= 0){
                     player.unsetPlayerRenderBlocked();
-                    player.updatePlayer(utils::State::IDLE, window);
                 }
             }
             player.setCurrentFrame(spriteIdx);
+        }
+
+        // TODO 
+        if (player.isJumping()){
+            player.currentJumpHeight -= 1;
+            if (player.currentJumpHeight <= 0){
+                player.unsetJumping();
+                player.setFalling();
+                player.updatePlayer(utils::State::FALL, window);
+            }
+            else{
+                player.updatePlayer(utils::State::JUMP, window);
+            }
         }
 
         while (accumulator >= time_step){
