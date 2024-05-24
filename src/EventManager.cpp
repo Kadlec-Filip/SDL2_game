@@ -8,11 +8,16 @@
 EventManager::EventManager(Player& p_player) : player(p_player) {}
 
 void EventManager::keyboardProcess(RenderWindow& p_rw){
-    if (!player.isPlayerRenderBlocked()){
+    if (!player.isPlayerRenderBlocked() && !player.isJumping() && !player.isFalling()){
         if (keyboardState[SDL_SCANCODE_J]){
             player.updatePlayer(utils::State::ATTACK, p_rw);
             player.setPlayerRenderBlocked();
             player.setBlockingTextureLen(player.getSizeOfStateSprites());
+        }
+        else if (keyboardState[SDL_SCANCODE_SPACE]){
+            player.updatePlayer(utils::State::JUMP, p_rw);
+            player.setJumping();
+            player.currentJumpHeight = utils::JUMP_HEIGHT;
         }
         else if (keyboardState[SDL_SCANCODE_A]) {
             player.updatePlayer(utils::State::RUN_L, p_rw);
@@ -33,10 +38,15 @@ void EventManager::keyboardProcess(RenderWindow& p_rw){
 }
 
 bool EventManager::detectCollision(const SDL_Rect& a, const SDL_Rect& b){
-    return (a.x < b.x + b.w &&
-            a.x + a.w > b.x &&
-            a.y < b.y + b.h &&
-            a.y + a.h > b.y);
+    // check manually for possible future differentiation (different behavior based on player-platform relation)
+    // for is-player-hit, is-npc-hit etc, use built-in SDL function (return SDL_HasIntersection(&a, &b);)
+    if (a.x + a.w <= b.x ||    // 'a' is to the left of 'b'
+        b.x + b.w <= a.x ||    // 'b' is to the left of 'a'
+        a.y + a.h <= b.y ||    // 'a' is above 'b'
+        b.y + b.h <= a.y) {    // 'b' is above 'a'
+        return false;
+    }
+    return true;
 }
 
 void EventManager::resolveCollision(Player& dynamicEntity, DrawableEntity& staticEntity){
@@ -44,6 +54,7 @@ void EventManager::resolveCollision(Player& dynamicEntity, DrawableEntity& stati
         // naive initial version -> assume player is above ground and only collision may come between players feet and ground
         player.setPos(Vector2f {dynamicEntity.getPos().x, staticEntity.getPos().y - dynamicEntity.getCurrentFrame().h});  // magic number 4, multiplication of initial version of the ground which will be removed
         player.setVelocityY(0);
+        player.unsetFalling();
         player.setGrounded();
     }
     else{

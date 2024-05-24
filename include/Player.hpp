@@ -11,12 +11,19 @@ class Player : public DrawableEntity {
 public:	
 	Player(Vector2f pos, SDL_Texture* texture);
 	utils::State getState();
+	int currentJumpHeight=0;
 	void setState(utils::State s);
 	int isAlive();
 	bool isGrounded();
     void setGrounded();
 	void unsetGrounded();
-	void setDead();
+	bool isJumping();
+    void setJumping();
+	void unsetJumping();
+	bool isFalling();
+    void setFalling();
+	void unsetFalling();
+	//void setDead();
 	int getSizeOfStateSprites();
 	void setCurrentFrame(int idx);
 	void setTexture(RenderWindow& w);
@@ -34,11 +41,14 @@ public:
 	Velocity2f& getVelocity();
 
 private:
-	bool grounded;
+	bool grounded=false;
+	bool jumping=false;
+	bool falling=false;
 	bool alive = false;
 	bool playerRenderBlocked=false;
 	int blockingTextureLen;
+	
 	Velocity2f velocity {0,0};
-	utils::State state = utils::State::RUN_R;
+	utils::State state = utils::State::RUN_R; // TODO: re-think state.. state horizontal+vertical? cover all states (RUN_R+attack, Fall+Run_R(+attack)...?)
 	std::map<utils::State, std::vector<SDL_Rect>> state_sprites;
 };

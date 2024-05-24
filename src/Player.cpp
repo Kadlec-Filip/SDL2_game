@@ -13,6 +13,8 @@ Player::Player(Vector2f pos, SDL_Texture* texture) : DrawableEntity{pos, texture
     state_sprites.insert({utils::State::RUN_L, sdlRenderUtils::playerRunLSpritesheet});
     state_sprites.insert({utils::State::IDLE, sdlRenderUtils::playerIdleSpritesheet});
     state_sprites.insert({utils::State::ATTACK, sdlRenderUtils::playerAttackRSpritesheet});
+    state_sprites.insert({utils::State::JUMP, sdlRenderUtils::playerJumpRSpritesheet});
+    state_sprites.insert({utils::State::FALL, sdlRenderUtils::playerFallRSpritesheet});
 }
 
 utils::State Player::getState(){ return state; }
@@ -50,6 +52,12 @@ void Player::setTexture(RenderWindow& w){
     case utils::State::ATTACK:
         texture = w.LoadTexture(sdlRenderUtils::playerTextureAttackRPath);
         break;
+    case utils::State::JUMP:
+        texture = w.LoadTexture(sdlRenderUtils::playerTextureJumpRPath);
+        break;
+    case utils::State::FALL:
+        texture = w.LoadTexture(sdlRenderUtils::playerTextureFalllRPath);
+        break;
     default:
         texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
         break;
@@ -59,6 +67,7 @@ void Player::setTexture(RenderWindow& w){
 void Player::setVelocity(Velocity2f p_velocity){ velocity = p_velocity; }
 
 void Player::setVelocityByState(){
+    velocity.value.y = 0;
     switch (state) {
     case utils::State::RUN_R:
         velocity.value.x = utils::PLAYER_RUN_R_VELOCITY;
@@ -69,16 +78,23 @@ void Player::setVelocityByState(){
     case utils::State::IDLE:
         velocity.value.x = 0;
         break;
-    case utils::State::ATTACK: // TODO if prev state is runR -> speed from runR, if leftR..
-        velocity.value.x = 0;
+    case utils::State::ATTACK:
+        // velocity.value.x = 0; // when attacking, dont change movement speed
+        break;
+    case utils::State::JUMP:
+        velocity.value.y += utils::JUMP_VELOCITY;
+        break;
+    case utils::State::FALL:
+        // velocity.value.y += 0 // If falling, dont change X, Y=gravity
         break;
     default:
         velocity.value.x = 0;
+        velocity.value.y = 0;
         break;
     }
 
     if (!isGrounded()) {
-        velocity.value.y = utils::GRAVITY; // Apply gravity
+        velocity.value.y += utils::GRAVITY; // Apply gravity
     }
 }
 
@@ -89,6 +105,9 @@ void Player::move(){
 
 void Player::updatePlayer(utils::State s, RenderWindow& w){
     setState(s);
+    if (s == utils::State::JUMP || s == utils::State::FALL){
+        unsetGrounded();
+    }
     setTexture(w);
     setVelocityByState(); // TODO rename (updateVelicities?)
 }
@@ -104,3 +123,11 @@ void Player::setVelocityY(float y){
 bool Player::isGrounded(){ return grounded; }
 void Player::setGrounded() { grounded = true; }
 void Player::unsetGrounded() { grounded = false; }
+
+bool Player::isJumping(){ return jumping; }
+void Player::setJumping() { jumping = true; }
+void Player::unsetJumping() { jumping = false; }
+
+bool Player::isFalling() { return falling; }
+void Player::setFalling() { falling = true; }
+void Player::unsetFalling() { falling = false; }

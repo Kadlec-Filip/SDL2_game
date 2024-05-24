@@ -13,8 +13,8 @@
 // TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 //      Separate logic in updating of player object ( render and movement updates shouldn't be tied)
-//      2) Ground player object
-//      1) Collision detection (first just basic wall, ground)
+//      Move player state logic out of main (is jumping, is falling...)
+//      Improve collision detection (now handing only naive case where player is above ground)
 
 int main(int argc, char* argv[]){
 
@@ -29,17 +29,13 @@ int main(int argc, char* argv[]){
     SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_Idle.png");
 
     // Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
-    Player player(Vector2f(utils::GAME_WINDOW_WIDTH/5-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
-    std::vector<DrawableEntity> dentities_vec = {DrawableEntity(Vector2f((32)*0, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*1, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*2, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*3, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*4, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*5, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*6, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*7, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*8, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture),
-                                                DrawableEntity(Vector2f((32)*9, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture)};
+    Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
+    // Populate ground 
+    std::vector<DrawableEntity> dentities_vec;
+    dentities_vec.reserve(40);
+    for (int i=0; i<40; ++i){
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture));
+    }
 
     SDL_Event event;
     EventManager eventManager(player);
@@ -65,8 +61,23 @@ int main(int argc, char* argv[]){
                 spriteIdx = spriteCounter = 0;
             }
 
+            // TODO do better, TODO WHY defined by ender speed? put jumping, attacking logic outside of current if statement
+            if (player.isFalling()){
+                player.updatePlayer(utils::State::FALL, window);
+            }
+            if (player.isJumping()){
+                player.currentJumpHeight -= 1;
+                if (player.currentJumpHeight <= 0){
+                    player.unsetJumping();
+                    player.setFalling();
+                    player.updatePlayer(utils::State::FALL, window);
+                }
+                else{
+                    player.updatePlayer(utils::State::JUMP, window);
+                }
+            }
             // handle blocking animation (e.g. attack)  TODO: to function/object
-            if (player.isPlayerRenderBlocked()){
+            else if (player.isPlayerRenderBlocked()){
                 player.setBlockingTextureLen(player.getBlockingTextureLen() - 1);
                 if (player.getBlockingTextureLen() <= 0){
                     player.unsetPlayerRenderBlocked();

@@ -9,12 +9,13 @@ namespace utils{
         return t;
     }
 
-    enum class State {RUN_L, RUN_R, IDLE, JUMP, ATTACK};
+    enum class State {RUN_L, RUN_R, IDLE, JUMP, ATTACK, FALL};
     const int GAME_WINDOW_HEIGHT = 720;
     const int GAME_WINDOW_WIDTH = 1280;
     const int RENDER_SPEED = 10;
-    const float PLAYER_RUN_R_VELOCITY = 5;
-    const float PLAYER_RUN_L_VELOCITY = -5;
-    const float JUMP_VELOCITY = 1;
+    const float PLAYER_RUN_R_VELOCITY = 3;
+    const float PLAYER_RUN_L_VELOCITY = -3;
+    const float JUMP_VELOCITY = -2;  // Gravity alwas applied -> if jumping JumpVel+GravityVel
+    const float JUMP_HEIGHT = 5;
     const float GRAVITY = 1;  // speed for now :)
 }
