@@ -1,0 +1,3 @@
+# ignore executables
+bin/debug/out
+bin/release/out

@@ -10,6 +10,7 @@ namespace utils{
     }
 
     enum class State {RUN_L, RUN_R, IDLE, JUMP, ATTACK, FALL};
+    enum class CollisionMoveType {LEFT, RIGHT, TOP, BOTTOM, NONE};
     const int GAME_WINDOW_HEIGHT = 720;
     const int GAME_WINDOW_WIDTH = 1280;
     const int RENDER_SPEED = 10;

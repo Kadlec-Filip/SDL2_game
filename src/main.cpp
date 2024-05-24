@@ -12,9 +12,11 @@
 
 // TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
-//      Separate logic in updating of player object ( render and movement updates shouldn't be tied)
 //      Move player state logic out of main (is jumping, is falling...)
-//      Improve collision detection (now handing only naive case where player is above ground)
+//      Prio1: Remove collision detection bugs
+//             - ideas {1st check isGrounded (after applied movement down), THEN start collision detection,
+//                      or separate horizontal & vertical col.det. -> check 1) right/left, 2)top/down
+//                      More specific checks of SDL_Rects ?}
 
 int main(int argc, char* argv[]){
 
@@ -32,9 +34,21 @@ int main(int argc, char* argv[]){
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
     // Populate ground 
     std::vector<DrawableEntity> dentities_vec;
-    dentities_vec.reserve(40);
+    dentities_vec.reserve(70);
     for (int i=0; i<40; ++i){
         dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture));
+    }
+    for (int i=0; i<30; ++i){
+        if (i < 10 || i > 20){
+            continue;
+        }
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(120)), grassTexture));
+    }
+    for (int i=0; i<30; ++i){
+        if (i < 20){
+            continue;
+        }
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(60)), grassTexture));
     }
 
     SDL_Event event;
@@ -72,6 +86,9 @@ int main(int argc, char* argv[]){
         }
 
         // TODO 
+        // if (player.isFalling()){
+        //     player.updatePlayer(utils::State::FALL, window);
+        // }
         if (player.isJumping()){
             player.currentJumpHeight -= 1;
             if (player.currentJumpHeight <= 0){

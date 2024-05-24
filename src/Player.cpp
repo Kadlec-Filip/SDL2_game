@@ -93,9 +93,7 @@ void Player::setVelocityByState(){
         break;
     }
 
-    if (!isGrounded()) {
-        velocity.value.y += utils::GRAVITY; // Apply gravity
-    }
+    velocity.value.y += utils::GRAVITY; // Apply gravity
 }
 
 void Player::move(){
