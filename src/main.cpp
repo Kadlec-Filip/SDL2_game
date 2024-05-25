@@ -13,10 +13,7 @@
 // TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 //      Move player state logic out of main (is jumping, is falling...)
-//      Prio1: Remove collision detection bugs
-//             - ideas {1st check isGrounded (after applied movement down), THEN start collision detection,
-//                      or separate horizontal & vertical col.det. -> check 1) right/left, 2)top/down
-//                      More specific checks of SDL_Rects ?}
+
 
 int main(int argc, char* argv[]){
 
@@ -86,9 +83,6 @@ int main(int argc, char* argv[]){
         }
 
         // TODO 
-        // if (player.isFalling()){
-        //     player.updatePlayer(utils::State::FALL, window);
-        // }
         if (player.isJumping()){
             player.currentJumpHeight -= 1;
             if (player.currentJumpHeight <= 0){

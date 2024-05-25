@@ -37,25 +37,10 @@ void EventManager::keyboardProcess(RenderWindow& p_rw){
     }
 }
 
-utils::CollisionMoveType EventManager::detectCollision(const SDL_Rect& a, const SDL_Rect& b){
-    // check manually for collision differentiation
-    // for is-player-hit, is-npc-hit etc, use built-in SDL function (return SDL_HasIntersection(&a, &b);)
-    if (a.x + a.w <= b.x ||    // 'a' is to the left of 'b'
-        b.x + b.w <= a.x ||    // 'b' is to the left of 'a'
-        a.y + a.h <= b.y ||    // 'a' is above 'b'
-        b.y + b.h <= a.y) {    // 'b' is above 'a'
-        return utils::CollisionMoveType::NONE;
-    }
-    // HERE we know a collision happen, now differentiate between them:
-    // ! order important
-    if (a.y + a.h > b.y && a.y + a.h < b.y + b.h) {
-        // 'a' hit 'b' from the top
-        return utils::CollisionMoveType::BOTTOM;
-    }
-    if (a.y < b.y + b.h && a.y > b.y) {
-        // 'a' hit 'b' from the bottom
-        return utils::CollisionMoveType::TOP;
-    }
+bool EventManager::detectCollision(const SDL_Rect& a, const SDL_Rect& b){
+    return SDL_HasIntersection(&a, &b);
+}
+utils::CollisionMoveType EventManager::identifyCollisionHorizontal(const SDL_Rect& a, const SDL_Rect& b){
     if(a.x + a.w > b.x && a.x + a.w < b.x + b.w){
         // 'a' hit 'b' from the left
         return utils::CollisionMoveType::RIGHT;
@@ -68,25 +53,49 @@ utils::CollisionMoveType EventManager::detectCollision(const SDL_Rect& a, const 
     return utils::CollisionMoveType::NONE;
 }
 
+
+utils::CollisionMoveType EventManager::identifyCollisionVertical(const SDL_Rect& a, const SDL_Rect& b){
+    // (a.y + a.h > b.y && a.y + a.h < b.y + b.h) & (a.y < b.y + b.h && a.y > b.y):
+    // conditions above detect collisions in general. introduced stricter check, since if you come to obstacle
+    // from LEFT or RIGHT, you may detect BOTTOM/TOP collisions, which results in unwanted move behavior.
+    // Reason: Due to GRAVITY, BOTTOM(and top) collision must be always checked first. No strict check is mandatory for Horizontal collisions.
+    if (a.y + a.h > b.y && a.y + a.h <= b.y + 1) {
+        // 'a' hit 'b' from the top
+        return utils::CollisionMoveType::BOTTOM;
+    }
+    if (a.y < b.y + b.h && a.y >= b.y + b.h - 1) {
+        // 'a' hit 'b' from the bottom
+        return utils::CollisionMoveType::TOP;
+    }
+    // If all cases are correct, the program shouldnt not reach here
+    return utils::CollisionMoveType::NONE;
+}
+
 void EventManager::resolveCollision(Player& dynamicEntity, DrawableEntity& staticEntity){
-    utils::CollisionMoveType detectedCollision = detectCollision(dynamicEntity.getBoundingBox(), staticEntity.getBoundingBox());
-    if (detectedCollision == utils::CollisionMoveType::RIGHT){
-        player.setPos(Vector2f {staticEntity.getPos().x - dynamicEntity.getCurrentFrame().w, dynamicEntity.getPos().y});
+    utils::CollisionMoveType identifiedCollision;
+    if(detectCollision(dynamicEntity.getBoundingBox(), staticEntity.getBoundingBox())){
+        identifiedCollision = identifyCollisionVertical(dynamicEntity.getBoundingBox(), staticEntity.getBoundingBox());
+        if (identifiedCollision == utils::CollisionMoveType::BOTTOM){
+            dynamicEntity.setPos(Vector2f {dynamicEntity.getPos().x, staticEntity.getPos().y - (dynamicEntity.getCurrentFrame().h)});
+            dynamicEntity.setVelocityY(0);
+            dynamicEntity.unsetFalling();
+            dynamicEntity.setGrounded();
+        }
+        else if (identifiedCollision == utils::CollisionMoveType::TOP){
+            dynamicEntity.setPos(Vector2f {dynamicEntity.getPos().x, staticEntity.getPos().y + (staticEntity.getCurrentFrame().h)});
+            dynamicEntity.unsetJumping();
+            dynamicEntity.setFalling();
+            dynamicEntity.setVelocityY(utils::GRAVITY);
+        }
     }
-    else if (detectedCollision == utils::CollisionMoveType::LEFT){
-        player.setPos(Vector2f {staticEntity.getPos().x + staticEntity.getCurrentFrame().w, dynamicEntity.getPos().y});
-    }
-    else if (detectedCollision == utils::CollisionMoveType::BOTTOM){
-        player.setPos(Vector2f {dynamicEntity.getPos().x, staticEntity.getPos().y - dynamicEntity.getCurrentFrame().h});
-        player.setVelocityY(0);
-        player.unsetFalling();
-        player.setGrounded();
-    }
-    else if (detectedCollision == utils::CollisionMoveType::TOP){
-        player.setPos(Vector2f {dynamicEntity.getPos().x, staticEntity.getPos().y + staticEntity.getCurrentFrame().h});
-        player.unsetJumping();
-        player.setFalling();
-        player.setVelocityY(utils::GRAVITY);
+    if(detectCollision(dynamicEntity.getBoundingBox(), staticEntity.getBoundingBox())){
+        identifiedCollision = identifyCollisionHorizontal(dynamicEntity.getBoundingBox(), staticEntity.getBoundingBox());
+        if (identifiedCollision == utils::CollisionMoveType::RIGHT){
+            dynamicEntity.setPos(Vector2f {staticEntity.getPos().x - (dynamicEntity.getCurrentFrame().w), dynamicEntity.getPos().y});
+        }
+        else if (identifiedCollision == utils::CollisionMoveType::LEFT){
+            dynamicEntity.setPos(Vector2f {staticEntity.getPos().x + (staticEntity.getCurrentFrame().w), dynamicEntity.getPos().y});
+        }
     }
 }
 
