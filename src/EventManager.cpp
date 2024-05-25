@@ -59,11 +59,11 @@ utils::CollisionMoveType EventManager::identifyCollisionVertical(const SDL_Rect&
     // conditions above detect collisions in general. introduced stricter check, since if you come to obstacle
     // from LEFT or RIGHT, you may detect BOTTOM/TOP collisions, which results in unwanted move behavior.
     // Reason: Due to GRAVITY, BOTTOM(and top) collision must be always checked first. No strict check is mandatory for Horizontal collisions.
-    if (a.y + a.h > b.y && a.y + a.h <= b.y + 1) {
+    if (a.y + a.h > b.y && a.y + a.h <= b.y + utils::GRAVITY) {
         // 'a' hit 'b' from the top
         return utils::CollisionMoveType::BOTTOM;
     }
-    if (a.y < b.y + b.h && a.y >= b.y + b.h - 1) {
+    if (a.y < b.y + b.h && a.y >= b.y + b.h - utils::GRAVITY) {
         // 'a' hit 'b' from the bottom
         return utils::CollisionMoveType::TOP;
     }
@@ -103,4 +103,16 @@ void EventManager::resolveAllCollisions(Player& dynamicEntity, std::vector<Drawa
     for (auto se : staticEntities){
         resolveCollision(dynamicEntity, se);
     }
+    keepPlayerInGameWindow();
+}
+
+void EventManager::keepPlayerInGameWindow(){
+    if(player.getPos().x < 1)
+        player.setPos(Vector2f {1, player.getPos().y});
+    if(player.getPos().x > utils::GAME_WINDOW_WIDTH - player.getCurrentFrame().w)
+        player.setPos(Vector2f {static_cast<float>(utils::GAME_WINDOW_WIDTH - player.getCurrentFrame().w), player.getPos().y});
+    if(player.getPos().y < 1)
+        player.setPos(Vector2f {player.getPos().x, 1});
+    if(player.getPos().y > utils::GAME_WINDOW_HEIGHT)
+        player.setPos(Vector2f {player.getPos().x, static_cast<float>(utils::GAME_WINDOW_HEIGHT - player.getCurrentFrame().h)});
 }

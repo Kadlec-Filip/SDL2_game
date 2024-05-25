@@ -16,7 +16,7 @@ namespace utils{
     const int RENDER_SPEED = 10;
     const float PLAYER_RUN_R_VELOCITY = 2;
     const float PLAYER_RUN_L_VELOCITY = -2;
-    const float JUMP_VELOCITY = -2;  // Gravity alwas applied -> if jumping JumpVel+GravityVel
-    const float JUMP_HEIGHT = 60;
-    const float GRAVITY = 1;  // speed for now :)
+    const float JUMP_VELOCITY = -4;  // Gravity alwas applied -> if jumping JumpVel+GravityVel
+    const float JUMP_HEIGHT = 40;
+    const float GRAVITY = 2;  // speed for now :)
 }
