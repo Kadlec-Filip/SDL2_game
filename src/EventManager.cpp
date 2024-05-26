@@ -103,10 +103,10 @@ void EventManager::resolveAllCollisions(Player& dynamicEntity, std::vector<Drawa
     for (auto se : staticEntities){
         resolveCollision(dynamicEntity, se);
     }
-    keepPlayerInGameWindow();
+    keepPlayerInGame();
 }
 
-void EventManager::keepPlayerInGameWindow(){
+void EventManager::keepPlayerInGame(){
     if(player.getPos().x < 1)
         player.setPos(Vector2f {1, player.getPos().y});
     if(player.getPos().x > utils::GAME_WINDOW_WIDTH - player.getCurrentFrame().w)

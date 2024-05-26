@@ -13,6 +13,8 @@ namespace utils{
     enum class CollisionMoveType {LEFT, RIGHT, TOP, BOTTOM, NONE};
     const int GAME_WINDOW_HEIGHT = 720;
     const int GAME_WINDOW_WIDTH = 1280;
+    const int GAME_HEIGHT = 1000;
+    const int GAME_WIDTH = 2560;
     const int RENDER_SPEED = 10;
     const float PLAYER_RUN_R_VELOCITY = 2;
     const float PLAYER_RUN_L_VELOCITY = -2;

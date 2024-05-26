@@ -13,6 +13,7 @@
 // TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 //      Move player state logic out of main (is jumping, is falling...)
+//      Separate EventManager into multiple classes!
 
 
 int main(int argc, char* argv[]){
@@ -116,9 +117,11 @@ int main(int argc, char* argv[]){
         // const float alpha = accumulator/time_step;
 
         // Resolve collisions
-        // TODO
         eventManager.resolveAllCollisions(player, dentities_vec);
 
+        // Move actual game window based on player position
+        //window.moveGameWindow(player);
+        
         // Display all drawable entities
         window.clear();
         for (DrawableEntity& dentity : dentities_vec){

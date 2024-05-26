@@ -57,3 +57,23 @@ int RenderWindow::getRefreshRate(){
 
     return mode.refresh_rate;
 }
+
+
+// void RenderWindow::moveGameWindow(Player& p){
+//     // TODO (finish all four directions (three), verify that game window is in game bounds. set x,y,w,h in the header file)
+//     int new_x_pos = x;
+//     if (p.getPos().x > utils::GAME_WINDOW_WIDTH*2/3){
+//         x = p.getPos().x - utils::GAME_WINDOW_WIDTH*2/3;
+//     }
+//     //Keep the window in bounds of the game
+//     // if( camera.x < 0 )
+//     // { 
+//     //     camera.x = 0;
+//     // }
+//     // if( camera.y < 0 )
+//     // {
+//     //     camera.y = 0;
+//     // }
+//     SDL_SetWindowPosition(window, x, 0);
+
+// }
