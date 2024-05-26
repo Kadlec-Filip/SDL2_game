@@ -31,21 +31,27 @@ int main(int argc, char* argv[]){
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
     // Populate ground 
     std::vector<DrawableEntity> dentities_vec;
-    dentities_vec.reserve(70);
+    dentities_vec.reserve(100);
     for (int i=0; i<40; ++i){
         dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(32)), grassTexture));
     }
-    for (int i=0; i<30; ++i){
-        if (i < 10 || i > 20){
-            continue;
-        }
-        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(120)), grassTexture));
+    for (int i=5; i<7; ++i){
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(48)), grassTexture));
     }
-    for (int i=0; i<30; ++i){
-        if (i < 20){
-            continue;
-        }
-        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(60)), grassTexture));
+    for (int i=10; i<13; ++i){
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(64)), grassTexture));
+    }
+    for (int i=13; i<17; ++i){
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(80)), grassTexture));
+    }
+    for (int i=20; i<24; ++i){
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(110)), grassTexture));
+    }
+    for (int i=27; i<30; ++i){
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(140)), grassTexture));
+    }
+    for (int i=34; i<36; ++i){
+        dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(170)), grassTexture));
     }
 
     SDL_Event event;
