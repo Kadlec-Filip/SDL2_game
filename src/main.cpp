@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "RenderWindow.hpp"
+#include "Camera.hpp"
 #include "DrawableEntity.hpp"
 #include "Player.hpp"
 #include "Math.hpp"
@@ -30,6 +31,9 @@ int main(int argc, char* argv[]){
 
     // Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
+
+    Camera camera(player);
+
     // Populate ground 
     std::vector<DrawableEntity> dentities_vec;
     dentities_vec.reserve(100);
@@ -120,7 +124,7 @@ int main(int argc, char* argv[]){
         eventManager.resolveAllCollisions(player, dentities_vec);
 
         // Move actual game window based on player position
-        //window.moveGameWindow(player);
+        // camera.updateCameraPosition();
         
         // Display all drawable entities
         window.clear();
