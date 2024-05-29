@@ -2,14 +2,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "DrawableEntity.hpp"
-#include "Player.hpp"
-class Player;
 class Camera{
-private:
-    Player& p; // make const
 public:
-    Camera(Player& p);
-    void updateCameraPosition();
+    Camera();
+    void updateCameraPosition(const SDL_Rect& r);
     SDL_Rect camRect;
 };

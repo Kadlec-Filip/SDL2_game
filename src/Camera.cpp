@@ -6,15 +6,15 @@
 #include "Camera.hpp"
 #include "Utils.hpp"
 
-Camera::Camera(Player& player) : p(player){
+Camera::Camera(){
     camRect.x = 0;
     camRect.y = 0;
     camRect.h = utils::GAME_HEIGHT;
     camRect.w = utils::GAME_WIDTH;
 }
 
-void Camera::updateCameraPosition(){
-    camRect.x = ( p.getPos().x + p.getCurrentFrame().h/2 ) - utils::GAME_WINDOW_WIDTH/2;
+void Camera::updateCameraPosition(const SDL_Rect& r){
+    camRect.x = ( r.x + r.h/2 ) - utils::GAME_WINDOW_WIDTH/2;
     //Keep the window in bounds of the game
     if( camRect.x < 0 )
     { 

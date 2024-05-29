@@ -6,26 +6,26 @@
 
 namespace sdlRenderUtils{
     // TODO: encapsulate, a lot of similar data abstractions to come
-    SDL_Rect spriteFrame1 {40, 40, 40, 40};
-    SDL_Rect spriteFrame2 {160, 40, 40, 40};
-    SDL_Rect spriteFrame3 {280, 40, 40, 40};
-    SDL_Rect spriteFrame4 {400, 40, 40, 40};
-    SDL_Rect spriteFrame5 {520, 40, 40, 40};
-    SDL_Rect spriteFrame6 {640, 40, 40, 40};
-    SDL_Rect spriteFrame7 {760, 40, 40, 40};
-    SDL_Rect spriteFrame8 {880, 40, 40, 40};
-    SDL_Rect spriteFrame9 {1000, 40, 40, 40};
-    SDL_Rect spriteFrame10 {1120, 40, 40, 40};
-    std::vector<SDL_Rect> playerRunLSpritesheet {spriteFrame9, spriteFrame8, spriteFrame7, spriteFrame6, spriteFrame5, spriteFrame4, spriteFrame3, spriteFrame2, spriteFrame1};
-    std::vector<SDL_Rect> playerRunRSpritesheet {spriteFrame1, spriteFrame2, spriteFrame3, spriteFrame4, spriteFrame5, spriteFrame6, spriteFrame7, spriteFrame8, spriteFrame9};
-    std::vector<SDL_Rect> playerIdleSpritesheet {spriteFrame1, spriteFrame2, spriteFrame3, spriteFrame4, spriteFrame5, spriteFrame6, spriteFrame7, spriteFrame8, spriteFrame9, spriteFrame10};
-    std::vector<SDL_Rect> playerAttackRSpritesheet {spriteFrame1, spriteFrame2, spriteFrame3, spriteFrame4};
-    std::vector<SDL_Rect> playerJumpRSpritesheet {spriteFrame2};
-    std::vector<SDL_Rect> playerFallRSpritesheet {spriteFrame2};
-    const char* playerTextureRunLPath = "../res/gfx/_Run_L.png";  // const char * mandatory for render window
-    const char* playerTextureRunRPath = "../res/gfx/_Run_R.png";
-    const char* playerTextureIdlePath = "../res/gfx/_Idle.png";
-    const char* playerTextureAttackRPath = "../res/gfx/_Attack.png";
-    const char* playerTextureJumpRPath = "../res/gfx/_Jump.png";
-    const char* playerTextureFalllRPath = "../res/gfx/_Fall.png";
+    extern SDL_Rect spriteFrame1;
+    extern SDL_Rect spriteFrame2;
+    extern SDL_Rect spriteFrame3;
+    extern SDL_Rect spriteFrame4;
+    extern SDL_Rect spriteFrame5;
+    extern SDL_Rect spriteFrame6;
+    extern SDL_Rect spriteFrame7;
+    extern SDL_Rect spriteFrame8;
+    extern SDL_Rect spriteFrame9;
+    extern SDL_Rect spriteFrame10;
+    extern std::vector<SDL_Rect> playerRunLSpritesheet;
+    extern std::vector<SDL_Rect> playerRunRSpritesheet;
+    extern std::vector<SDL_Rect> playerIdleSpritesheet;
+    extern std::vector<SDL_Rect> playerAttackRSpritesheet;
+    extern std::vector<SDL_Rect> playerJumpRSpritesheet;
+    extern std::vector<SDL_Rect> playerFallRSpritesheet;
+    extern const char* playerTextureRunLPath;  // const char * mandatory for render window
+    extern const char* playerTextureRunRPath;
+    extern const char* playerTextureIdlePath;
+    extern const char* playerTextureAttackRPath;
+    extern const char* playerTextureJumpRPath;
+    extern const char* playerTextureFalllRPath;
 }

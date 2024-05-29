@@ -11,11 +11,11 @@
 #include "Utils.hpp"
 #include "EventManager.hpp"
 
-// TODO:use DrawableEntity as template, inherit StaticEntity (ground etc) from it. Inherit DynamicEntity (NPCs, Player) from it.
+// TODO:
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 //      Move player state logic out of main (is jumping, is falling...)
 //      Separate EventManager into multiple classes!
-//      Layer the program structure. Circural includes present (Camera+RenderWindow+Player)
+//      Layer the program structure
 
 
 int main(int argc, char* argv[]){
@@ -33,8 +33,8 @@ int main(int argc, char* argv[]){
     // Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
 
-    Camera camera(player);
-
+    Camera camera;
+    
     // Populate ground 
     std::vector<DrawableEntity> dentities_vec;
     dentities_vec.reserve(100);
@@ -85,10 +85,10 @@ int main(int argc, char* argv[]){
             }
 
             // handle blocking animation (e.g. attack)  TODO: to function/object
-            else if (player.isPlayerRenderBlocked()){
+            else if (player.isDynamicEntityRenderBlocked()){
                 player.setBlockingTextureLen(player.getBlockingTextureLen() - 1);
                 if (player.getBlockingTextureLen() <= 0){
-                    player.unsetPlayerRenderBlocked();
+                    player.unsetDynamicEntityRenderBlocked();
                 }
             }
             player.setCurrentFrame(spriteIdx);
@@ -100,10 +100,10 @@ int main(int argc, char* argv[]){
             if (player.currentJumpHeight <= 0){
                 player.unsetJumping();
                 player.setFalling();
-                player.updatePlayer(utils::State::FALL, window);
+                player.updateDynamicEntity(utils::State::FALL, window);
             }
             else{
-                player.updatePlayer(utils::State::JUMP, window);
+                player.updateDynamicEntity(utils::State::JUMP, window);
             }
         }
 
@@ -123,9 +123,9 @@ int main(int argc, char* argv[]){
 
         // Resolve collisions
         eventManager.resolveAllCollisions(player, dentities_vec);
-
+        
         // Move actual game window based on player position
-        camera.updateCameraPosition();
+        camera.updateCameraPosition(player.getBoundingBox());
         
         // Display all drawable entities
         window.clear();
