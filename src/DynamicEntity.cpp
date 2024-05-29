@@ -45,12 +45,12 @@ void DynamicEntity::move(){
     pos.y += velocity.value.y;
 }
 
-void DynamicEntity::updateDynamicEntity(utils::State s, RenderWindow& w){
+void DynamicEntity::updateDynamicEntity(utils::State s, PlayerTextureLoader& ptl){
     setState(s);
     if (s == utils::State::JUMP || s == utils::State::FALL){
         unsetGrounded();
     }
-    setTexture(w);
+    setTexture(ptl);
     setVelocityByState(); // TODO rename (updateVelicities?)
 }
 

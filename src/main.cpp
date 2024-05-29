@@ -7,6 +7,7 @@
 #include "Camera.hpp"
 #include "DrawableEntity.hpp"
 #include "Player.hpp"
+#include "PlayerTextureLoader.hpp"
 #include "Math.hpp"
 #include "Utils.hpp"
 #include "EventManager.hpp"
@@ -15,7 +16,7 @@
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 //      Move player state logic out of main (is jumping, is falling...)
 //      Separate EventManager into multiple classes!
-//      Layer the program structure
+//      Create game init (move from main..)
 
 
 int main(int argc, char* argv[]){
@@ -32,7 +33,8 @@ int main(int argc, char* argv[]){
 
     // Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
     Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
-
+    PlayerTextureLoader pLoader(window);
+    
     Camera camera;
     
     // Populate ground 
@@ -100,10 +102,10 @@ int main(int argc, char* argv[]){
             if (player.currentJumpHeight <= 0){
                 player.unsetJumping();
                 player.setFalling();
-                player.updateDynamicEntity(utils::State::FALL, window);
+                player.updateDynamicEntity(utils::State::FALL, pLoader);
             }
             else{
-                player.updateDynamicEntity(utils::State::JUMP, window);
+                player.updateDynamicEntity(utils::State::JUMP, pLoader);
             }
         }
 
@@ -115,7 +117,7 @@ int main(int argc, char* argv[]){
             accumulator -= time_step;
         }
 
-        eventManager.keyboardProcess(window);
+        eventManager.keyboardProcess(pLoader);
 
         // Update positions of objects
         player.move();

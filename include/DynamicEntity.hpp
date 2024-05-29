@@ -5,7 +5,7 @@
 #include <map>
 #include "Utils.hpp"
 #include "DrawableEntity.hpp"
-#include "RenderWindow.hpp"
+#include "PlayerTextureLoader.hpp"
 
 // class RenderWindow;
 
@@ -28,8 +28,8 @@ public:
 	//void setDead();
 	int getSizeOfStateSprites();
 	void setCurrentFrame(int idx);
-	virtual void setTexture(RenderWindow& w) = 0;
-	void updateDynamicEntity(utils::State s, RenderWindow& w);
+	virtual void setTexture(PlayerTextureLoader& ptl) = 0;
+	void updateDynamicEntity(utils::State s, PlayerTextureLoader& ptl);
 	bool isDynamicEntityRenderBlocked();
     void setDynamicEntityRenderBlocked();
 	void unsetDynamicEntityRenderBlocked();

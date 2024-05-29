@@ -47,32 +47,57 @@ void Player::setVelocityByState(){
     velocity.value.y += utils::GRAVITY; // Apply gravity
 }
 
-
-void Player::setTexture(RenderWindow& w){
+void Player::setTexture(PlayerTextureLoader& ptl){
     switch (state) {
     case utils::State::RUN_R:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureRunRPath);
+        texture = ptl.getTextureByState(utils::State::RUN_R);
         break;
     case utils::State::RUN_L:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureRunLPath);
+        texture = ptl.getTextureByState(utils::State::RUN_L);
         break;
     case utils::State::IDLE:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+        texture = ptl.getTextureByState(utils::State::IDLE);
         break;
     case utils::State::ATTACK:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureAttackRPath);
+        texture = ptl.getTextureByState(utils::State::ATTACK);
         break;
     case utils::State::JUMP:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureJumpRPath);
+        texture = ptl.getTextureByState(utils::State::JUMP);
         break;
     case utils::State::FALL:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureFalllRPath);
+        texture = ptl.getTextureByState(utils::State::FALL);
         break;
     default:
-        texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+        texture = ptl.getTextureByState(utils::State::RUN_R);
         break;
     }
 }
+
+// void Player::setTexture(RenderWindow& w){
+//     switch (state) {
+//     case utils::State::RUN_R:
+//         texture = w.LoadTexture(sdlRenderUtils::playerTextureRunRPath);
+//         break;
+//     case utils::State::RUN_L:
+//         texture = w.LoadTexture(sdlRenderUtils::playerTextureRunLPath);
+//         break;
+//     case utils::State::IDLE:
+//         texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+//         break;
+//     case utils::State::ATTACK:
+//         texture = w.LoadTexture(sdlRenderUtils::playerTextureAttackRPath);
+//         break;
+//     case utils::State::JUMP:
+//         texture = w.LoadTexture(sdlRenderUtils::playerTextureJumpRPath);
+//         break;
+//     case utils::State::FALL:
+//         texture = w.LoadTexture(sdlRenderUtils::playerTextureFalllRPath);
+//         break;
+//     default:
+//         texture = w.LoadTexture(sdlRenderUtils::playerTextureIdlePath);
+//         break;
+//     }
+// }
 
 int Player::isAlive(){ return alive; }
 void Player::setDead() { alive = false; }

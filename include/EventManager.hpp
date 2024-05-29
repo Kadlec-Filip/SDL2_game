@@ -9,7 +9,7 @@ class EventManager{
 public:
     EventManager(Player& p_player);
     const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
-    void keyboardProcess(RenderWindow& p_rw); 
+    void keyboardProcess(PlayerTextureLoader& p_ptl); 
     utils::CollisionMoveType identifyCollisionHorizontal(const SDL_Rect &a, const SDL_Rect &b);
     utils::CollisionMoveType identifyCollisionVertical(const SDL_Rect &a, const SDL_Rect &b);
     bool detectCollision(const SDL_Rect &a, const SDL_Rect &b);

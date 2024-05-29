@@ -13,7 +13,8 @@ public:
 	int getHp();
 	void setStamina();
 	int getStamina();
-	void setTexture(RenderWindow& w) override;
+	//void setTexture(RenderWindow& w) override;
+	void setTexture(PlayerTextureLoader& ptl);
 	void setVelocityByState() override;
 
 private:

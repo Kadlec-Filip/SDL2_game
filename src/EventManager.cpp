@@ -7,32 +7,32 @@
 
 EventManager::EventManager(Player& p_player) : player(p_player) {}
 
-void EventManager::keyboardProcess(RenderWindow& p_rw){
+void EventManager::keyboardProcess(PlayerTextureLoader& p_ptl){
     if (!player.isDynamicEntityRenderBlocked() && !player.isJumping() && !player.isFalling()){
         if (keyboardState[SDL_SCANCODE_J]){
-            player.updateDynamicEntity(utils::State::ATTACK, p_rw);
+            player.updateDynamicEntity(utils::State::ATTACK, p_ptl);
             player.setDynamicEntityRenderBlocked();
             player.setBlockingTextureLen(player.getSizeOfStateSprites());
         }
         else if (keyboardState[SDL_SCANCODE_SPACE]){
-            player.updateDynamicEntity(utils::State::JUMP, p_rw);
+            player.updateDynamicEntity(utils::State::JUMP, p_ptl);
             player.setJumping();
             player.currentJumpHeight = utils::JUMP_HEIGHT;
         }
         else if (keyboardState[SDL_SCANCODE_A]) {
-            player.updateDynamicEntity(utils::State::RUN_L, p_rw);
+            player.updateDynamicEntity(utils::State::RUN_L, p_ptl);
         }
         else if (keyboardState[SDL_SCANCODE_D]){
-            player.updateDynamicEntity(utils::State::RUN_R, p_rw);
+            player.updateDynamicEntity(utils::State::RUN_R, p_ptl);
         }
         else if (keyboardState[SDL_SCANCODE_S]){
-            player.updateDynamicEntity(utils::State::IDLE, p_rw);
+            player.updateDynamicEntity(utils::State::IDLE, p_ptl);
         }
         else if (keyboardState[SDL_SCANCODE_W]){
-            player.updateDynamicEntity(utils::State::IDLE, p_rw);
+            player.updateDynamicEntity(utils::State::IDLE, p_ptl);
         }
         else{
-            player.updateDynamicEntity(utils::State::IDLE, p_rw);
+            player.updateDynamicEntity(utils::State::IDLE, p_ptl);
         }
     }
 }

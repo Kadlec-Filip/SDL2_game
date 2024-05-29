@@ -15,7 +15,7 @@ namespace utils{
     const int GAME_WINDOW_WIDTH = 1280;
     const int GAME_HEIGHT = 1000;
     const int GAME_WIDTH = 2560;
-    const int RENDER_SPEED = 10;
+    const int RENDER_SPEED = 5;
     const float PLAYER_RUN_R_VELOCITY = 2;
     const float PLAYER_RUN_L_VELOCITY = -2;
     const float JUMP_VELOCITY = -4;  // Gravity alwas applied -> if jumping JumpVel+GravityVel
