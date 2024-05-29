@@ -4,6 +4,7 @@
 
 #include "RenderWindow.hpp"
 #include "DrawableEntity.hpp"
+#include "Camera.hpp"
 
 RenderWindow::RenderWindow(const char* p_title, int width, int height) : window(NULL), renderer(NULL) {
     window = SDL_CreateWindow(p_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
@@ -28,6 +29,21 @@ SDL_Texture* RenderWindow::LoadTexture(const char* filepath){
 
 void RenderWindow::clear(){
     SDL_RenderClear(renderer);
+}
+
+void RenderWindow::render(DrawableEntity& dentity, Camera& camera){
+    SDL_Rect sdl_rectangle_source;
+    sdl_rectangle_source.x = dentity.getCurrentFrame().x;
+    sdl_rectangle_source.y = dentity.getCurrentFrame().y;
+    sdl_rectangle_source.w = dentity.getCurrentFrame().w;
+    sdl_rectangle_source.h = dentity.getCurrentFrame().h;
+
+    SDL_Rect sdl_rectangle_dst;
+    sdl_rectangle_dst.x = dentity.getPos().x - camera.camRect.x;
+    sdl_rectangle_dst.y = dentity.getPos().y;
+    sdl_rectangle_dst.w = dentity.getCurrentFrame().w;
+    sdl_rectangle_dst.h = dentity.getCurrentFrame().h;
+    SDL_RenderCopy(renderer, dentity.getTexture(), &sdl_rectangle_source, &sdl_rectangle_dst);
 }
 
 void RenderWindow::render(DrawableEntity& dentity){

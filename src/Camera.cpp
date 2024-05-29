@@ -14,19 +14,14 @@ Camera::Camera(Player& player) : p(player){
 }
 
 void Camera::updateCameraPosition(){
-    if (p.getPos().x > camRect.x + utils::GAME_WINDOW_WIDTH*3/4){
-        camRect.x = p.getPos().x - utils::GAME_WINDOW_WIDTH*1/4;
-    }
-    else if (p.getPos().x > camRect.x + utils::GAME_WINDOW_WIDTH*1/4){
-        camRect.x = p.getPos().x - utils::GAME_WINDOW_WIDTH*3/4;
-    }
+    camRect.x = ( p.getPos().x + p.getCurrentFrame().h/2 ) - utils::GAME_WINDOW_WIDTH/2;
     //Keep the window in bounds of the game
-    // if( camera.x < 0 )
-    // { 
-    //     camera.x = 0;
-    // }
-    // if( camera.y < 0 )
-    // {
-    //     camera.y = 0;
-    // }
+    if( camRect.x < 0 )
+    { 
+        camRect.x = 0;
+    }
+    if( camRect.x > utils::GAME_WIDTH - utils::GAME_WINDOW_WIDTH)
+    { 
+        camRect.x = utils::GAME_WIDTH - utils::GAME_WINDOW_WIDTH;
+    }
 }

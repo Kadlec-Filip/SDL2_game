@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "DrawableEntity.hpp"
+#include "Camera.hpp"
 
 class RenderWindow{
 private:
@@ -15,6 +16,7 @@ public:
     SDL_Texture* LoadTexture(const char* filepath);  // TODO replace with std::string?
     void clear();
     void render(DrawableEntity& dentity);
+    void render(DrawableEntity& dentity, Camera& camera);
     void display();
     int getRefreshRate();
 };

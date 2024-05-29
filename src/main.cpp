@@ -15,6 +15,7 @@
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 //      Move player state logic out of main (is jumping, is falling...)
 //      Separate EventManager into multiple classes!
+//      Layer the program structure. Circural includes present (Camera+RenderWindow+Player)
 
 
 int main(int argc, char* argv[]){
@@ -124,14 +125,14 @@ int main(int argc, char* argv[]){
         eventManager.resolveAllCollisions(player, dentities_vec);
 
         // Move actual game window based on player position
-        // camera.updateCameraPosition();
+        camera.updateCameraPosition();
         
         // Display all drawable entities
         window.clear();
         for (DrawableEntity& dentity : dentities_vec){
-            window.render(dentity);
+            window.render(dentity, camera);
         }
-        window.render(player);
+        window.render(player, camera);
         window.display();
 
         // regulate the game loop. if loop was faster than refresh rate, sleep for the rest of the refresh time

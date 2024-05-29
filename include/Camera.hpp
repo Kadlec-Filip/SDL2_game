@@ -4,7 +4,7 @@
 
 #include "DrawableEntity.hpp"
 #include "Player.hpp"
-
+class Player;
 class Camera{
 private:
     Player& p; // make const

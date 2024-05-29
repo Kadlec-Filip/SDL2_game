@@ -109,8 +109,8 @@ void EventManager::resolveAllCollisions(Player& dynamicEntity, std::vector<Drawa
 void EventManager::keepPlayerInGame(){
     if(player.getPos().x < 1)
         player.setPos(Vector2f {1, player.getPos().y});
-    if(player.getPos().x > utils::GAME_WINDOW_WIDTH - player.getCurrentFrame().w)
-        player.setPos(Vector2f {static_cast<float>(utils::GAME_WINDOW_WIDTH - player.getCurrentFrame().w), player.getPos().y});
+    if(player.getPos().x > utils::GAME_WIDTH - player.getCurrentFrame().w)
+        player.setPos(Vector2f {static_cast<float>(utils::GAME_WIDTH - player.getCurrentFrame().w), player.getPos().y});
     if(player.getPos().y < 1)
         player.setPos(Vector2f {player.getPos().x, 1});
     if(player.getPos().y > utils::GAME_WINDOW_HEIGHT)

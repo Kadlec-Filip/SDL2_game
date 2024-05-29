@@ -7,6 +7,8 @@
 #include "DrawableEntity.hpp"
 #include "RenderWindow.hpp"
 
+class RenderWindow;
+
 class Player : public DrawableEntity {
 public:	
 	Player(Vector2f pos, SDL_Texture* texture);
