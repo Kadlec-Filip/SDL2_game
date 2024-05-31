@@ -11,8 +11,6 @@ DrawableEntity::DrawableEntity(Vector2f pos, SDL_Texture* texture) : pos(pos), t
     currentFrame.w = 32;
     currentFrame.h = 32;
 }
-std::vector<SDL_Texture*> tex;
-
 
 Vector2f& DrawableEntity::getPos(){ return pos; }
 void DrawableEntity::setPos(Vector2f p_pos){ pos = p_pos; }

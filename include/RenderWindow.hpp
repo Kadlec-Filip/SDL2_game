@@ -13,7 +13,7 @@ private:
 public:
     RenderWindow(const char* p_title, int width, int height);
     ~RenderWindow();
-    SDL_Texture* LoadTexture(const char* filepath);  // TODO replace with std::string?
+    SDL_Texture* LoadTexture(const char* filepath);
     void clear();
     void render(DrawableEntity& dentity);
     void render(DrawableEntity& dentity, Camera& camera);

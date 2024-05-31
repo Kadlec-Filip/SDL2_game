@@ -15,6 +15,7 @@ RenderWindow::RenderWindow(const char* p_title, int width, int height) : window(
 }
 RenderWindow::~RenderWindow(){
     SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
 }
 
 SDL_Texture* RenderWindow::LoadTexture(const char* filepath){

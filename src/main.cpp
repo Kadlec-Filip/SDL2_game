@@ -14,9 +14,11 @@
 
 // TODO:
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
-//      Move player state logic out of main (is jumping, is falling...)
+//      Move player state logic out of game loop (is jumping, is falling...)
 //      Separate EventManager into multiple classes!
 //      Create game init (move from main..)
+//      Allow player to attack while jumping (either additional logic, either add states JUMP&ATTACK, FALL&ATTACK)
+//      Cleanup resources in DrawableEntity(ies) & all children -> Texture*
 
 
 int main(int argc, char* argv[]){
@@ -28,15 +30,16 @@ int main(int argc, char* argv[]){
     
     RenderWindow window("GAME v0.1", utils::GAME_WINDOW_WIDTH, utils::GAME_WINDOW_HEIGHT);
 
+    // TODO wrap in init, handle releasing resources
     SDL_Texture* grassTexture = window.LoadTexture("../res/gfx/ground_grass_1.png");
-    SDL_Texture* playerTexture = window.LoadTexture("../res/gfx/_Idle.png");
 
     // Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(32*2), utils::GAME_WINDOW_HEIGHT/2-(32*2)), playerTexture);
-    Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), playerTexture);
+    Player player(Vector2f(utils::GAME_WINDOW_WIDTH/2-(40), utils::GAME_WINDOW_HEIGHT/2-40), window.LoadTexture("../res/gfx/_Idle.png"));
     PlayerTextureLoader pLoader(window);
     
     Camera camera;
     
+    std::cout << "Init of Grounds started \n";
     // Populate ground 
     std::vector<DrawableEntity> dentities_vec;
     dentities_vec.reserve(100);
@@ -62,6 +65,7 @@ int main(int argc, char* argv[]){
         dentities_vec.emplace_back(DrawableEntity(Vector2f((32)*i, utils::GAME_WINDOW_HEIGHT-(170)), grassTexture));
     }
 
+    std::cout << "Init of Grounds done \n";
     SDL_Event event;
     EventManager eventManager(player);
     bool game_running = true;

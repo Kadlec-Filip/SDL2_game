@@ -10,6 +10,7 @@
 class TextureLoader{
 public:
     TextureLoader(RenderWindow& re);
+    ~TextureLoader();
     SDL_Texture* getTextureByState(utils::State s);
 protected:
     virtual void preLoadTextures() = 0;

@@ -9,4 +9,13 @@
 
 TextureLoader::TextureLoader(RenderWindow& re_p) : re(re_p) {}
 
+TextureLoader::~TextureLoader(){
+    for (auto& texMapElem : textures){
+        if (texMapElem.second != nullptr){
+            SDL_DestroyTexture(texMapElem.second);
+        }
+    }
+    textures.clear();
+}
+
 SDL_Texture* TextureLoader::getTextureByState(utils::State s){ return textures.at(s); }
