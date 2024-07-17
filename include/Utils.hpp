@@ -9,7 +9,7 @@ namespace utils{
         return t;
     }
 
-    enum class State {RUN_L, RUN_R, IDLE, JUMP, ATTACK, FALL};
+    enum class State {RUN_L, RUN_R, IDLE, JUMP, ATTACK, FALL, JUMP_ATTACK, FALL_ATTACK};
     enum class CollisionMoveType {LEFT, RIGHT, TOP, BOTTOM, NONE};
     const int GAME_WINDOW_HEIGHT = 720;
     const int GAME_WINDOW_WIDTH = 1280;

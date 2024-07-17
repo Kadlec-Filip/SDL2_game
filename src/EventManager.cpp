@@ -32,6 +32,22 @@ void EventManager::keyboardProcess(PlayerTextureLoader& p_ptl){
             player.updateDynamicEntity(utils::State::IDLE, p_ptl);
         }
     }
+
+    // if (!player.isDynamicEntityRenderBlocked() && player.isJumping()){
+    //     if (keyboardState[SDL_SCANCODE_J]){
+    //         player.updateDynamicEntity(utils::State::JUMP_ATTACK, p_ptl);
+    //         player.setDynamicEntityRenderBlocked();
+    //         player.setBlockingTextureLen(player.getSizeOfStateSprites());
+    //     }
+    // }
+
+    if (!player.isDynamicEntityRenderBlocked() && player.isFalling()){
+        if (keyboardState[SDL_SCANCODE_J]){
+            player.updateDynamicEntity(utils::State::JUMP_ATTACK, p_ptl);
+            player.setDynamicEntityRenderBlocked();
+            player.setBlockingTextureLen(player.getSizeOfStateSprites());
+        }
+    }
 }
 
 bool EventManager::detectCollision(const SDL_Rect& a, const SDL_Rect& b){

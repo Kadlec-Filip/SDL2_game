@@ -15,6 +15,8 @@ Player::Player(Vector2f pos, SDL_Texture* texture) : DynamicEntity{pos, texture}
     state_sprites.insert({utils::State::ATTACK, sdlRenderUtils::playerAttackRSpritesheet});
     state_sprites.insert({utils::State::JUMP, sdlRenderUtils::playerJumpRSpritesheet});
     state_sprites.insert({utils::State::FALL, sdlRenderUtils::playerFallRSpritesheet});
+    state_sprites.insert({utils::State::FALL_ATTACK, sdlRenderUtils::playerAttackRSpritesheet});
+    state_sprites.insert({utils::State::JUMP_ATTACK, sdlRenderUtils::playerAttackRSpritesheet});
 }
 
 void Player::setVelocityByState(){
@@ -29,14 +31,15 @@ void Player::setVelocityByState(){
     case utils::State::IDLE:
         velocity.value.x = 0;
         break;
+    // when attacking, dont change movement speed
     case utils::State::ATTACK:
-        // velocity.value.x = 0; // when attacking, dont change movement speed
+    case utils::State::JUMP_ATTACK:
+    // velocity.value.y += 0 // If falling, dont change X, Y=gravity
+    case utils::State::FALL:
+    case utils::State::FALL_ATTACK:
         break;
     case utils::State::JUMP:
         velocity.value.y += utils::JUMP_VELOCITY;
-        break;
-    case utils::State::FALL:
-        // velocity.value.y += 0 // If falling, dont change X, Y=gravity
         break;
     default:
         velocity.value.x = 0;
@@ -59,6 +62,8 @@ void Player::setTexture(PlayerTextureLoader& ptl){
         texture = ptl.getTextureByState(utils::State::IDLE);
         break;
     case utils::State::ATTACK:
+    case utils::State::JUMP_ATTACK:
+    case utils::State::FALL_ATTACK:
         texture = ptl.getTextureByState(utils::State::ATTACK);
         break;
     case utils::State::JUMP:

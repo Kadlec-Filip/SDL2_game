@@ -13,11 +13,13 @@
 #include "EventManager.hpp"
 
 // TODO:
+//      2) Disable jump when not grounded !
+//      1) Finish Attack + Jump
+//      1) When FALL+ATTACK = OK; When Jump->FALL+ATTACK -> attack animation stuck on repeat
 //      Remove RenderWindow from Player class; RenderManager(?) could take care of this
 //      Move player state logic out of game loop (is jumping, is falling...)
 //      Separate EventManager into multiple classes!
 //      Create game init (move from main..)
-//      Allow player to attack while jumping (either additional logic, either add states JUMP&ATTACK, FALL&ATTACK)
 //      Cleanup resources in DrawableEntity(ies) & all children -> Texture*
 
 
@@ -94,6 +96,7 @@ int main(int argc, char* argv[]){
             else if (player.isDynamicEntityRenderBlocked()){
                 player.setBlockingTextureLen(player.getBlockingTextureLen() - 1);
                 if (player.getBlockingTextureLen() <= 0){
+                    std::cout << "UNBLOCKING BLOCKED TEXTURE\n";  // TODO: continue, does not reach with JUMP+ATTACK
                     player.unsetDynamicEntityRenderBlocked();
                 }
             }
@@ -104,6 +107,7 @@ int main(int argc, char* argv[]){
         if (player.isJumping()){
             player.currentJumpHeight -= 1;
             if (player.currentJumpHeight <= 0){
+                std::cout << "JUMP HEIGHT REACHED\n";
                 player.unsetJumping();
                 player.setFalling();
                 player.updateDynamicEntity(utils::State::FALL, pLoader);
