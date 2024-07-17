@@ -14,7 +14,7 @@ void EventManager::keyboardProcess(PlayerTextureLoader& p_ptl){
             player.setDynamicEntityRenderBlocked();
             player.setBlockingTextureLen(player.getSizeOfStateSprites());
         }
-        else if (keyboardState[SDL_SCANCODE_SPACE]){
+        else if (keyboardState[SDL_SCANCODE_SPACE] || keyboardState[SDL_SCANCODE_W]){
             player.updateDynamicEntity(utils::State::JUMP, p_ptl);
             player.setJumping();
             player.currentJumpHeight = utils::JUMP_HEIGHT;
@@ -26,9 +26,6 @@ void EventManager::keyboardProcess(PlayerTextureLoader& p_ptl){
             player.updateDynamicEntity(utils::State::RUN_R, p_ptl);
         }
         else if (keyboardState[SDL_SCANCODE_S]){
-            player.updateDynamicEntity(utils::State::IDLE, p_ptl);
-        }
-        else if (keyboardState[SDL_SCANCODE_W]){
             player.updateDynamicEntity(utils::State::IDLE, p_ptl);
         }
         else{
